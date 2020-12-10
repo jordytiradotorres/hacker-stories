@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useReducer } from "react";
+import React, { useCallback, useEffect, useReducer, useState } from "react";
 import "./App.css";
 import List from "./components/List";
 import InputWithLabel from "./components/InputWithLabel";
@@ -16,6 +16,8 @@ const App = () => {
 
 	const [searchTerm, setSearchTerm] = useSemiPersistentState("search");
 
+	const [url, setUrl] = useState(`${API_ENDPOINT}${searchTerm}`);
+
 	const handleFetchStories = useCallback(() => {
 		if (!searchTerm === "") return;
 
@@ -23,7 +25,7 @@ const App = () => {
 			type: "STORIES_FETCH_INIT",
 		});
 
-		fetch(`${API_ENDPOINT}${searchTerm}`)
+		fetch(url)
 			.then((response) => response.json())
 			.then((result) => {
 				dispatchStories({
@@ -36,7 +38,7 @@ const App = () => {
 					type: "STORIES_FETCH_FAILURE",
 				});
 			});
-	}, [searchTerm]);
+	}, [url]);
 
 	useEffect(() => {
 		handleFetchStories();
@@ -49,8 +51,12 @@ const App = () => {
 		});
 	};
 
-	const handleSearch = (event) => {
+	const handleSearchInput = (event) => {
 		setSearchTerm(event.target.value);
+	};
+
+	const handleSearchSubmit = () => {
+		setUrl(`${API_ENDPOINT}${searchTerm}`);
 	};
 
 	// crea una nueva matriz filtrada, apartir si coincide con el texto ingresado
@@ -64,13 +70,20 @@ const App = () => {
 			<InputWithLabel
 				id="search"
 				type="text"
-				onInputChange={handleSearch}
+				onInputChange={handleSearchInput}
 				value={searchTerm}
 				isFocused
 			>
 				<strong>Search:</strong>
 			</InputWithLabel>
 
+			<button
+				type="button"
+				disabled={!searchTerm}
+				onClick={handleSearchSubmit}
+			>
+				Submit
+			</button>
 			<hr />
 
 			{stories.isError && <h3>Algo salio mal...</h3>}
