@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useCallback, useEffect, useReducer } from "react";
 import "./App.css";
 import List from "./components/List";
 import InputWithLabel from "./components/InputWithLabel";
@@ -16,7 +16,7 @@ const App = () => {
 
 	const [searchTerm, setSearchTerm] = useSemiPersistentState("search");
 
-	useEffect(() => {
+	const handleFetchStories = useCallback(() => {
 		if (!searchTerm === "") return;
 
 		dispatchStories({
@@ -37,6 +37,10 @@ const App = () => {
 				});
 			});
 	}, [searchTerm]);
+
+	useEffect(() => {
+		handleFetchStories();
+	}, [handleFetchStories]);
 
 	const handleRemoveStory = (item) => {
 		dispatchStories({
