@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
 import "./App.css";
 import List from "./components/List";
 import InputWithLabel from "./components/InputWithLabel";
 import useSemiPersistentState from "./hooks/useSemiPersistentState";
+import storiesReducer from "./reducers/index";
 
 const App = () => {
 	const initialStories = [
@@ -24,10 +25,17 @@ const App = () => {
 		},
 	];
 
-	const [stories, setStories] = useState([]);
+	// const [stories, setStories] = useState([]);
+	// const [stories, dispatchStories] = useReducer(storiesReducer, []);
+	const [stories, dispatchStories] = useReducer(storiesReducer, {
+		data: [],
+		isLoading: false,
+		isError: false,
+	});
+
 	const [searchTerm, setSearchTerm] = useSemiPersistentState("search");
-	const [isLoading, setIsLoading] = useState(false);
-	const [isError, setIsError] = useState(false);
+	// const [isLoading, setIsLoading] = useState(false);
+	// const [isError, setIsError] = useState(false);
 
 	const getAsyncStories = () => {
 		return new Promise((resolve, reject) => {
@@ -38,25 +46,39 @@ const App = () => {
 	};
 
 	useEffect(() => {
-		setIsLoading(true);
+		// setIsLoading(true);
+		dispatchStories({
+			type: "STORIES_FETCH_INIT",
+		});
 
 		getAsyncStories()
 			.then((result) => {
-				setStories(result.data.stories);
-				setIsLoading(false);
+				// setStories(result.data.stories);
+				dispatchStories({
+					type: "STORIES_FETCH_SUCCESS",
+					payload: result.data.stories,
+				});
+				// setIsLoading(false);
 			})
 			.catch(() => {
-				setIsError(true);
-				setIsLoading(false);
+				// setIsError(true);
+				// setIsLoading(false);
+				dispatchStories({
+					type: "STORIES_FETCH_FAILURE",
+				});
 			});
 	}, []);
 
 	const handleRemoveStories = (item) => {
-		const newStories = stories.filter(
-			(story) => item.objectID !== story.objectID
-		);
+		// const newStories = stories.filter(
+		// 	(story) => item.objectID !== story.objectID
+		// );
 
-		setStories(newStories);
+		// setStories(newStories);
+		dispatchStories({
+			type: "REMOVE_STORY",
+			payload: item,
+		});
 	};
 
 	const handleSearch = (event) => {
@@ -64,7 +86,7 @@ const App = () => {
 	};
 
 	// crea una nueva matriz filtrada, apartir si coincide con el texto ingresado
-	const searchedStories = stories.filter((story) =>
+	const searchedStories = stories.data.filter((story) =>
 		story.title.toLowerCase().includes(searchTerm.trim().toLowerCase())
 	);
 
@@ -83,9 +105,9 @@ const App = () => {
 
 			<hr />
 
-			{isError && <h3>Algo salio mal...</h3>}
+			{stories.isError && <h3>Algo salio mal...</h3>}
 
-			{isLoading ? (
+			{stories.isLoading ? (
 				<h2>Cargando...</h2>
 			) : (
 				<List

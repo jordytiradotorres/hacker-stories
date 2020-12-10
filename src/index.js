@@ -3,12 +3,12 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-// import KeysItems from "./KeysItems";
+// import EjemploCheckbox from "./EjemploCheckbox";
 
 ReactDOM.render(
 	<React.StrictMode>
 		<App />
-		{/* <KeysItems /> */}
+		{/* <EjemploCheckbox /> */}
 	</React.StrictMode>,
 	document.getElementById("root")
 );
