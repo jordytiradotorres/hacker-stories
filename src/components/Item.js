@@ -8,9 +8,9 @@ const Item = ({ item, onRemoveItem }) => {
 					{item.title}
 				</a>
 			</span>{" "}
-			<span>{item.author}</span>
-			<span>{item.num_comments}</span>
-			<span>{item.points}</span>
+			<span>{item.author} </span>
+			<span>{item.num_comments} </span>
+			<span>{item.points}</span>{" "}
 			<button onClick={() => onRemoveItem(item)}>Dismiss</button>
 		</div>
 	);
