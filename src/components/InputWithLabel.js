@@ -1,9 +1,12 @@
 import React, { useEffect, useRef } from "react";
+import styles from "../App.module.css";
+import cs from "classnames";
 
 const InputWithLabel = ({
 	id,
 	type,
 	onInputChange,
+	handleSearchSubmit,
 	value,
 	children,
 	isFocused,
@@ -18,9 +21,13 @@ const InputWithLabel = ({
 	}, [isFocused]);
 
 	return (
-		<form>
-			<label htmlFor={id}>{children}</label> &nbsp;
+		<form onSubmit={handleSearchSubmit} className={styles.searchForm}>
+			<label htmlFor={id} className={styles.label}>
+				{children}
+			</label>{" "}
+			&nbsp;
 			<input
+				className={styles.input}
 				ref={inputRef}
 				type={type}
 				id={id}
@@ -28,6 +35,13 @@ const InputWithLabel = ({
 				value={value}
 				autoFocus={isFocused}
 			/>
+			<button
+				className={cs(styles.button, styles.buttonLarge)}
+				type="submit"
+				disabled={!value}
+			>
+				Submit
+			</button>
 		</form>
 	);
 };

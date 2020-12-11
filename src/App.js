@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useReducer, useState } from "react";
+import styles from "./App.module.css";
 import axios from "axios";
-import "./App.css";
 import List from "./components/List";
 import InputWithLabel from "./components/InputWithLabel";
 import useSemiPersistentState from "./hooks/useSemiPersistentState";
@@ -55,8 +55,10 @@ const App = () => {
 		setSearchTerm(event.target.value);
 	};
 
-	const handleSearchSubmit = () => {
+	const handleSearchSubmit = (event) => {
 		setUrl(`${API_ENDPOINT}${searchTerm}`);
+
+		event.preventDefault();
 	};
 
 	// crea una nueva matriz filtrada, apartir si coincide con el texto ingresado
@@ -65,26 +67,18 @@ const App = () => {
 	// );
 
 	return (
-		<div className="App">
-			<h1>My Hacker Stories</h1>
+		<div className={styles.container}>
+			<h1 className={styles.headlinePrimary}>My Hacker Stories</h1>
 			<InputWithLabel
 				id="search"
 				type="text"
-				onInputChange={handleSearchInput}
-				value={searchTerm}
 				isFocused
+				value={searchTerm}
+				onInputChange={handleSearchInput}
+				handleSearchSubmit={handleSearchSubmit}
 			>
 				<strong>Search:</strong>
 			</InputWithLabel>
-
-			<button
-				type="button"
-				disabled={!searchTerm}
-				onClick={handleSearchSubmit}
-			>
-				Submit
-			</button>
-			<hr />
 
 			{stories.isError && <h3>Algo salio mal...</h3>}
 
