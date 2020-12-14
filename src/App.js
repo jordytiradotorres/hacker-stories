@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useReducer, useState } from "react";
+import React, {
+	useCallback,
+	useEffect,
+	useReducer,
+	useState,
+	useMemo,
+} from "react";
 import styled from "styled-components";
 import axios from "axios";
 import List from "./components/List";
@@ -21,6 +27,15 @@ const StyledHeadlinePrimary = styled.h1`
 	font-weight: 300;
 	letter-spacing: 2px;
 `;
+
+const getSumComments = (stories) => {
+	console.log("C");
+
+	return stories.data.reduce(
+		(result, value) => result + value.num_comments,
+		0
+	);
+};
 
 const App = () => {
 	const [stories, dispatchStories] = useReducer(storiesReducer, {
@@ -58,12 +73,12 @@ const App = () => {
 		handleFetchStories();
 	}, [handleFetchStories]);
 
-	const handleRemoveStory = (item) => {
+	const handleRemoveStory = useCallback((item) => {
 		dispatchStories({
 			type: "REMOVE_STORY",
 			payload: item,
 		});
-	};
+	}, []);
 
 	const handleSearchInput = (event) => {
 		setSearchTerm(event.target.value);
@@ -80,9 +95,13 @@ const App = () => {
 	// 	story.title.toLowerCase().includes(searchTerm.trim().toLowerCase())
 	// );
 
+	const sumComments = useMemo(() => getSumComments(stories), [stories]);
+
 	return (
 		<StyledContainer>
-			<StyledHeadlinePrimary>My Hacker Stories</StyledHeadlinePrimary>
+			<StyledHeadlinePrimary>
+				My Hacker Stories with: {sumComments} comments.
+			</StyledHeadlinePrimary>
 
 			<InputWithLabel
 				id="search"
