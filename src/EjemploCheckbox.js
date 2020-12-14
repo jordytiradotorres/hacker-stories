@@ -1,5 +1,25 @@
 import React, { useReducer } from "react";
 import todoReducer from "./reducers/ejemploReductor";
+import styled from "styled-components";
+
+const StyledButton = styled.button`
+	cursor: pointer;
+	background: transparent;
+	font-size: 16px;
+	border-radius: 3px;
+	color: ${(props) => (props.primary ? "green" : "palevioletred")};
+	border: ${(props) => (props.primary ? "violet" : "palevioletred")};
+
+	margin: 0 1em;
+	padding: 0.25em 1em;
+	transition: 0.5s all ease-out;
+
+	&:hover {
+		color: white;
+		background-color: ${(props) =>
+			props.primary ? "violet" : "palevioletred"};
+	}
+`;
 
 const initialTodos = [
 	{
@@ -25,20 +45,25 @@ const EjemploCheckbox = () => {
 	};
 
 	return (
-		<ul>
-			{todos.map((item) => (
-				<li key={item.id}>
-					<label>
-						<input
-							type="checkbox"
-							checked={item.complete}
-							onChange={() => handleChange(item)}
-						/>
-						{item.task}
-					</label>
-				</li>
-			))}
-		</ul>
+		<>
+			<ul>
+				{todos.map((item) => (
+					<li key={item.id}>
+						<label>
+							<input
+								type="checkbox"
+								checked={item.complete}
+								onChange={() => handleChange(item)}
+							/>
+							{item.task}
+						</label>
+					</li>
+				))}
+			</ul>
+
+			<StyledButton>un boton</StyledButton>
+			<StyledButton primary>un boton primario</StyledButton>
+		</>
 	);
 };
 

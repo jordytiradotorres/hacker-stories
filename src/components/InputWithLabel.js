@@ -1,6 +1,46 @@
 import React, { useEffect, useRef } from "react";
-import styles from "../App.module.css";
-import cs from "classnames";
+import styled from "styled-components";
+// import styles from "../App.module.css";
+// import cs from "classnames";
+
+const StyledButton = styled.button`
+	background: transparent;
+	border: 1px solid #171212;
+	padding: 5px;
+	cursor: pointer;
+
+	transition: all 0.1s ease-in;
+
+	&:hover {
+		background: #171212;
+		color: #ffffff;
+	}
+`;
+
+const StyledButtonLarge = styled(StyledButton)`
+	padding: 10px;
+`;
+
+const StyledSearchForm = styled.form`
+	padding: 10px 0 20px 0;
+	display: flex;
+	align-items: baseline;
+`;
+
+const StyledLabel = styled.label`
+	border-top: 1px solid #171212;
+	border-left: 1px solid #171212;
+	padding-left: 5px;
+	font-size: 24px;
+`;
+
+const StyledInput = styled.input`
+	border: none;
+	border-bottom: 1px solid #171212;
+	background-color: transparent;
+
+	font-size: 24px;
+`;
 
 const InputWithLabel = ({
 	id,
@@ -21,13 +61,10 @@ const InputWithLabel = ({
 	}, [isFocused]);
 
 	return (
-		<form onSubmit={handleSearchSubmit} className={styles.searchForm}>
-			<label htmlFor={id} className={styles.label}>
-				{children}
-			</label>{" "}
-			&nbsp;
-			<input
-				className={styles.input}
+		<StyledSearchForm onSubmit={handleSearchSubmit}>
+			<StyledLabel htmlFor={id}>{children}</StyledLabel>
+
+			<StyledInput
 				ref={inputRef}
 				type={type}
 				id={id}
@@ -35,14 +72,11 @@ const InputWithLabel = ({
 				value={value}
 				autoFocus={isFocused}
 			/>
-			<button
-				className={cs(styles.button, styles.buttonLarge)}
-				type="submit"
-				disabled={!value}
-			>
+
+			<StyledButtonLarge type="submit" disabled={!value}>
 				Submit
-			</button>
-		</form>
+			</StyledButtonLarge>
+		</StyledSearchForm>
 	);
 };
 
