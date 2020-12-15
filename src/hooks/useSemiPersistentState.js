@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 
+// la funcion va a devolver un string y una actualizacion de funcion con un parametro pero no retorna nada
 const useSemiPersistentState = (key) => {
 	const isMounted = useRef(false);
 

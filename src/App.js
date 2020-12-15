@@ -7,10 +7,12 @@ import React, {
 } from "react";
 import styled from "styled-components";
 import axios from "axios";
+
 import List from "./components/List";
 import InputWithLabel from "./components/InputWithLabel";
-import useSemiPersistentState from "./hooks/useSemiPersistentState";
 import storiesReducer from "./reducers/index";
+import useSemiPersistentState from "./hooks/useSemiPersistentState";
+import Item from "./components/Item";
 
 const API_ENDPOINT = "https://hn.algolia.com/api/v1/search?query=";
 
@@ -130,3 +132,6 @@ const App = () => {
 };
 
 export default App;
+
+// exportar componentes para hacer las pruebas con jest
+export { InputWithLabel, List, Item };

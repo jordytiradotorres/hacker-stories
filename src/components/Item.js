@@ -54,8 +54,8 @@ const Item = ({ item, onRemoveItem }) => {
 					{item.title}
 				</a>
 			</StyledColumn>
-			<StyledColumn width="30%">{item.author} </StyledColumn>
-			<StyledColumn width="10%">{item.num_comments} </StyledColumn>
+			<StyledColumn width="30%">{item.author}</StyledColumn>
+			<StyledColumn width="10%">{item.num_comments}</StyledColumn>
 			<StyledColumn width="10%">{item.points}</StyledColumn>
 			<StyledColumn width="10%">
 				<StyledButtonSmall
