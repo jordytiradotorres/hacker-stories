@@ -1,7 +1,38 @@
 import React, { useState } from "react";
 import { sortBy } from "lodash";
+import styled from "styled-components";
 
 import Item from "./Item";
+
+const StyledButton = styled.button`
+	background: transparent;
+	border: 1px solid #171212;
+	padding: 5px;
+	cursor: pointer;
+	margin-right: 5px;
+	width: 80px;
+	outline: none;
+
+	transition: all 0.1s ease-in;
+
+	&:hover {
+		background-color: #f1e3e4;
+		color: #171212;
+	}
+
+	&:hover > svg > g {
+		fill: #171212;
+		stroke: #171212;
+	}
+`;
+
+const StyledSpan = styled.span`
+	margin-bottom: 1em;
+	display: inline-block;
+	margin-right: 0.5em;
+	color: #ffffff;
+	text-transform: uppercase;
+`;
 
 const List = React.memo(({ list, onRemoveItem }) => {
 	const SORTS = {
@@ -39,31 +70,42 @@ const List = React.memo(({ list, onRemoveItem }) => {
 	return (
 		<div>
 			<div>
+				<StyledSpan>Ordenar por: </StyledSpan>
 				<span>
-					<button type="button" onClick={() => handleSort("TITLE")}>
+					<StyledButton
+						type="button"
+						onClick={() => handleSort("TITLE")}
+					>
 						Title
-					</button>
+					</StyledButton>
 				</span>
 
 				<span>
-					<button type="button" onClick={() => handleSort("AUTHOR")}>
+					<StyledButton
+						type="button"
+						onClick={() => handleSort("AUTHOR")}
+					>
 						Author
-					</button>
+					</StyledButton>
 				</span>
 
 				<span>
-					<button type="button" onClick={() => handleSort("COMMENT")}>
+					<StyledButton
+						type="button"
+						onClick={() => handleSort("COMMENT")}
+					>
 						Comments
-					</button>
+					</StyledButton>
 				</span>
 
 				<span>
-					<button type="button" onClick={() => handleSort("POINT")}>
+					<StyledButton
+						type="button"
+						onClick={() => handleSort("POINT")}
+					>
 						Points
-					</button>
+					</StyledButton>
 				</span>
-
-				<span>Actions</span>
 			</div>
 			{sortedList.map((item) => (
 				<Item

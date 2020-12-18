@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-// import styles from "../App.module.css";
-
-import { ReactComponent as Check } from "../check.svg";
+import { ReactComponent as Close } from "../close.svg";
 
 const StyledItem = styled.div`
 	display: flex;
@@ -29,16 +27,20 @@ const StyledButton = styled.button`
 	border: 1px solid #171212;
 	padding: 5px;
 	cursor: pointer;
+	margin-right: 5px;
+	width: 80px;
+	outline: none;
 
 	transition: all 0.1s ease-in;
 
 	&:hover {
-		background-color: #222;
+		background-color: #f1e3e4;
+		color: #171212;
 	}
 
 	&:hover > svg > g {
-		fill: #ffffff;
-		stroke: #ffffff;
+		fill: #f1e3e4;
+		stroke: #f1e3e4;
 	}
 `;
 
@@ -63,7 +65,7 @@ const Item = ({ item, onRemoveItem }) => {
 					onClick={() => onRemoveItem(item)}
 				>
 					{/* Dismiss */}
-					<Check height="18px" width="18px" />
+					<Close height="18px" width="18px" />
 				</StyledButtonSmall>
 			</StyledColumn>
 		</StyledItem>

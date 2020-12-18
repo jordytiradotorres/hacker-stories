@@ -8,37 +8,37 @@ const StyledButton = styled.button`
 	border: 1px solid #171212;
 	padding: 5px;
 	cursor: pointer;
+	margin-left: 0.5em;
+	width: 80px;
+	outline: none;
 
 	transition: all 0.1s ease-in;
 
 	&:hover {
-		background: #171212;
-		color: #ffffff;
+		background-color: #f1e3e4;
+		color: #171212;
 	}
-`;
 
-const StyledButtonLarge = styled(StyledButton)`
-	padding: 10px;
+	&:hover > svg > g {
+		fill: #171212;
+		stroke: #171212;
+	}
 `;
 
 const StyledSearchForm = styled.form`
 	padding: 10px 0 20px 0;
-	display: flex;
-	align-items: baseline;
 `;
 
 const StyledLabel = styled.label`
-	border-top: 1px solid #171212;
-	border-left: 1px solid #171212;
-	padding-left: 5px;
 	font-size: 24px;
+	margin-right: 0.5em;
 `;
 
 const StyledInput = styled.input`
 	border: none;
 	border-bottom: 1px solid #171212;
 	background-color: transparent;
-
+	outline: none;
 	font-size: 24px;
 `;
 
@@ -73,9 +73,9 @@ const InputWithLabel = ({
 				autoFocus={isFocused}
 			/>
 
-			<StyledButtonLarge type="submit" disabled={!value}>
+			<StyledButton type="submit" disabled={!value}>
 				Submit
-			</StyledButtonLarge>
+			</StyledButton>
 		</StyledSearchForm>
 	);
 };
